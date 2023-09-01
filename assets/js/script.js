@@ -1,7 +1,15 @@
+// VARIABLE DECLARATIONS
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+  
+  // var textareaEl = $('.description');
+  var saveBtn = $('.saveBtn');
+  var tasks = JSON.parse(localStorage.getItem("tasks")) || {};
+  
+  
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -9,6 +17,29 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
+
+  saveBtn.on('click', storeEvents);
+      for (const key in tasks) {
+        var timeBlock = $('#' + key).children()[1];
+        timeBlock.value = tasks[key];
+        console.log(timeBlock);
+      }
+      
+      function storeEvents(event) {
+        var eventStore = {
+          event: $(this).siblings()[1].value,
+          time: $(this).parent().attr("id"),
+        }
+        
+        tasks[eventStore.time] = eventStore.event;
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        
+        console.log(tasks);
+        console.log(eventStore);
+      }
+      
+
+      
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
@@ -20,44 +51,23 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  // handleSaveButton();
+  
+  var today = dayjs();
+
+  var currentDay = $('#currentDay');
+
+  currentDay.text(today.format("dddd, MMMM D, YYYY h:mm A"));
+  var currentHour = today.format("H");
+
+  for (var i = 9; i < 18; i++){
+    var timeB = $('#hour-' + i);
+    if (i < currentHour) {
+      timeB.addClass("past");
+    } else if (i == currentHour) {
+      timeB.addClass("present");
+    } else {
+      timeB.addClass("future");
+    }
+  }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Add current day at top of page with dayjs 
-
-// When I view the time blocks the colors indicate past present or future
-
-// Variable that holds current hour
-
-// Make array of time blocks on schedule
-
-// Compare hour variable to time block array
-
-    // if hour is greater than time block 
-        // time block turns gray
-
-    // else if hour === time block
-        // time block turns red
-
-    // else
-        // time block green
-
-// Make each time block an input field with submit button
-
-    // Make submit event that adds input to local storage
-
-// Make function that parses and appends local storage to page
-
-// Local storage 
