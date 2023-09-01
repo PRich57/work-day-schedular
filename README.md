@@ -18,7 +18,9 @@ To get started, visit the link in the description above. Upon loading the web ap
 
 ## Mock-Up
 
+The image below shows the web application's appearance and functionality.
 
+![Screenshot of Work Day Schedular](/assets/images/wdsScreenshot.png)
 
 ## Credits
 
